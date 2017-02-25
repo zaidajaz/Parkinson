@@ -1,0 +1,64 @@
+.wrapper{
+	padding: 0;
+}
+.cust-nav-login{
+	margin-bottom: 0;
+	border-radius: 0;	
+}
+.cust-jumbo-login{
+	border-radius: 0 !important;
+	background: url('../images/login-back.jpg');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	margin-bottom: 0;
+}
+.cust-jumbo-login h2{
+	color:#fff;
+}
+.cust-jumbo-login p{
+	color:#ccc;
+	font-size: 16px;
+}
+.cust-login-form label{
+	color: #fff;
+}
+.cust-jumbo-features{
+	padding-top: 0;
+	margin-bottom: 0;
+}
+.cust-jumbo-features .container-fluid:nth-child(1), .container-fluid:nth-child(2){
+	text-align: center;
+	padding-bottom: 2em;
+}
+.cust-feature-column{
+	border-right:1px solid #ccc;
+	border-left:1px solid #ccc;
+}
+.cust-feature-column:nth-child(1){
+	border-left: none;
+}
+.cust-feature-column:nth-child(3){
+	border-right: none;
+}
+.cust-feature-column p{
+	font-size: 15px;
+	color:#827b7b;
+}
+.cust-jumbo-features .container-fluid:nth-child(1) h2{
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 0.5em;
+}
+.cust-footer{
+	background-color: #ccc;
+	min-height: 4em;
+	color: #696664;
+	padding: 1.5em;
+}
+.cust-footer i{
+	border-right: 1px solid #B9B8B8;
+	margin-right: 0.5em;
+	padding-right: 0.5em;
+}
+.fa-twitter{
+	border-right: 0 !important;
+}
