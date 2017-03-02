@@ -41,16 +41,25 @@
 			</div>
 			<div class="col-md-6">
 				<h2>Login</h2>
-				<form class="cust-login-form">
+				<form method='post' action='login_auth/' class="cust-login-form">
+				{% csrf_token %}
 				  <div class="form-group">
-				    <label for="exampleInputEmail1">Email address</label>
-				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+				    <label for="username">Username</label>
+				    <input type="text" autocomplete="off" name="username" class="form-control" id="username" placeholder="Username">
 				  </div>
 				  <div class="form-group">
-				    <label for="exampleInputPassword1">Password</label>
-				    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				    <label for="password">Password</label>
+				    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
 				  </div>
 				  <button type="Login" class="btn btn-primary">Submit</button>
+				  <h4>
+
+				 {% if invalid %}
+				  	<div class="alert alert-danger fade in">Invalid Credentials</div>
+				 {% else %}
+				  	<div class="alert alert-danger fade in cust-login-alert">Invalid Credentials</div>
+				 {% endif %}
+				  </h4>
 				</form>
 			</div>
 		</div>
