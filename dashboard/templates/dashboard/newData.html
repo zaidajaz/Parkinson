@@ -1,0 +1,51 @@
+
+
+{% extends "dashboard/dash_header.html" %}
+{% block content %}
+
+<div class="wrapper">
+    {% include 'dashboard/sidebar.html' %}
+
+    <div class="main-panel">
+		<nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Datasets</a>
+                </div>
+                {% include 'dashboard/toplinks.html' %}
+            </div>
+        </nav>
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+
+                    	<div class="card">
+                    		<form method="post" action="">
+                    		{% csrf_token %}
+                    		<ul>
+                    			{{form.as_ul}}
+                    		</ul>
+                    		<input type="submit" name="submit" value="Save">
+                    		</form>
+                    	</div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'dashboard/footer.html' %}
+
+
+    </div>
+</div>
+
+{% endblock %}

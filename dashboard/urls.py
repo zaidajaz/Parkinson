@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^$', views.dashboard, name='dashboard'),
     url(r'^profile/$', views.user_profile, name='user_profile'),
     url(r'^datasets/$', views.data_list, name='data_list'),
+    url(r'^datasets/new/$', views.newData, name='newData'),
 ]
