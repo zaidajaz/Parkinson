@@ -92,6 +92,39 @@
         });
     </script>
 
+    <!--custom scripts -->
+<script type="text/javascript">
 
+    $('#id_dataset_author').val('{{userObj.username}}');
+
+    $('.cust-data-form').find('p').each(function(id, obj){
+        if(id == 1 || id == 2){
+            $(this).css('display','none');
+        }
+    })
+
+    <!-- Manage Sidebar Active Li -->
+        var page = $('.navbar-brand').text();
+        $('.nav').find(`li[class='active']`).removeClass('active');
+        switch(page){
+            case 'Dashboard':
+                var link = $('.nav').find(`li[data-page='dashboard']`);
+                link.addClass('active');
+                break;
+            case 'User Profile':
+                var link = $('.nav').find(`li[data-page='profile']`);
+                link.addClass('active');
+                break;
+            case 'Datasets':
+                var link = $('.nav').find(`li[data-page='datasets']`);
+                link.addClass('active');
+                break;
+        }
+
+
+    <!-- Manage Sidebar Active Li -->
+
+</script>
+ <!-- custom_scripts -->
     
 </html>
