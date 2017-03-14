@@ -65,3 +65,9 @@
 .cust-login-alert{
 	display: none;
 }
+.data-in-modal-row:hover{
+	cursor: pointer !important;
+}
+.selected-modal-row{
+	background-color: #DDD;
+}

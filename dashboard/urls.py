@@ -1,4 +1,3 @@
-
 from django.conf.urls import url
 from . import views
 
@@ -7,4 +6,6 @@ urlpatterns = [
     url(r'^profile/$', views.user_profile, name='user_profile'),
     url(r'^datasets/$', views.data_list, name='data_list'),
     url(r'^datasets/new/$', views.newData, name='newData'),
+    url(r'^models/$', views.model_list, name='model_list'),
+    url(r'^models/new/$', views.newModel, name='newModel'),
 ]

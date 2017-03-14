@@ -16,7 +16,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Datasets</a>
+                    <a class="navbar-brand" href="#">Models</a>
                 </div>
                 {% include 'dashboard/toplinks.html' %}
             </div>
@@ -28,31 +28,36 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Associated Datasets</h4>
-                                <p class="category">Here's a list of your datasets</p>
+                                <h4 class="title">Associated Models</h4>
+                                <p class="category">Here's a list of your models</p>
                             </div>
                             <div class="content table-responsive table-full-width">
 
                                 <table class="table table-hover table-striped">
                                     <thead>
-                                        <th>Dataset Name</th>
+                                        <th>Model Name</th>
                                     	<th>Author</th>
                                     	<th>Last Modified</th>
+                                        <th>Algorithm Used</th>
                                     </thead>
                                     <tbody>
-                                        {% for data in data_list %}
+                                        
+                                        {% for model in model_list %}
                                             <tr>
-                                                <td>{{data.dataset_name}}</td>
-                                                <td>{{data.dataset_author}}</td>
-                                                <td>{{data.dataset_up_date}}</td>
+                                                <td>{{model.model_name}}</td>
+                                                <td>{{model.model_author}}</td>
+                                                <td>{{model.model_up_date}}</td>
+                                                <td>{{model.model_algo}}</td>
                                             </tr>
-                                        {% endfor %}
 
-                                        {% if not data_list %}
+                                        {% endfor %}
+                                        
+                                        {% if not model_list %}
                                             <tr>
                                                 <td></td>
                                                 <td></td>
-                                                <td><b>Nothing Here Yet. Click on Add More to add new data.</b></td>
+                                                <td><b>Nothing Here Yet. Click on Add More to create a model.</b></td>
+                                                <td></td>
                                                 <td></td>
                                             </tr> 
                                         {% endif %}
@@ -63,7 +68,7 @@
                             </div>
 
                         </div>
-                        <a href="{{root_url}}/dashboard/datasets/new/" class="btn btn-primary">Add More</a>
+                        <a href="{{root_url}}/dashboard/models/new/" class="btn btn-primary">Add More</a>
                     </div>
                 </div>
             </div>

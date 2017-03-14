@@ -47,7 +47,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <!-- <script src="{% static 'js/bootstrap.min.js'%}"></script> -->
   </body>
 
   {% load staticfiles %}
@@ -103,7 +103,7 @@
         }
     })
 
-    <!-- Manage Sidebar Active Li -->
+    <!-- manage sidebar list -->
         var page = $('.navbar-brand').text();
         $('.nav').find(`li[class='active']`).removeClass('active');
         switch(page){
@@ -119,10 +119,41 @@
                 var link = $('.nav').find(`li[data-page='datasets']`);
                 link.addClass('active');
                 break;
+            case 'Models':
+                var link = $('.nav').find(`li[data-page='models']`);
+                link.addClass('active');
+                break;
         }
 
 
     <!-- Manage Sidebar Active Li -->
+
+    <!-- Disable ID input on new model page -->
+
+    $('.cust-data-id').prop('disabled','true');
+    var html = "<a class='show-modal-link' data-toggle='modal' data-target='#datasetModal' href=''>Select a Dataset</a>";
+    $('.cust-data-id').parent().append(html);   
+
+    <!-- Disable ID input on new model page -->
+
+    <!-- Get ID from MODAL -->
+    $('.show-modal-link').click(function(e){
+
+        $('.data-in-modal-row').unbind('click');
+        $('.data-in-modal-row').click(function(e){
+            var id = $(this).data('id');
+            $('#id_model_data_id').val(id);
+            $('.data-in-modal-row').removeClass('selected-modal-row');
+            $(this).addClass('selected-modal-row');
+
+            if($('button[data-id="modal-dismiss"]').text() == 'Close'){
+                $('button[data-id="modal-dismiss"]').text('Confirm');
+            }
+        });
+
+    });
+
+    <!-- Get ID from MODAL -->
 
 </script>
  <!-- custom_scripts -->
