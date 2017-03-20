@@ -96,6 +96,7 @@
 <script type="text/javascript">
 
     $('#id_dataset_author').val('{{userObj.username}}');
+    $('#id_model_author').val('{{userObj.username}}');
 
     $('.cust-data-form').find('p').each(function(id, obj){
         if(id == 1 || id == 2){
@@ -123,6 +124,10 @@
                 var link = $('.nav').find(`li[data-page='models']`);
                 link.addClass('active');
                 break;
+            case 'Reports':
+                var link = $('.nav').find(`li[data-page='reports']`);
+                link.addClass('active');
+                break;
         }
 
 
@@ -130,9 +135,12 @@
 
     <!-- Disable ID input on new model page -->
 
-    $('.cust-data-id').prop('disabled','true');
-    var html = "<a class='show-modal-link' data-toggle='modal' data-target='#datasetModal' href=''>Select a Dataset</a>";
-    $('.cust-data-id').parent().append(html);   
+
+    var aDummyInput = "<input type='text' class='form-control' id='dummy-dataset-name' disabled> ";
+    var html = aDummyInput +  "<a class='show-modal-link' data-toggle='modal' data-target='#datasetModal' href=''>Select a Dataset</a><br>";
+
+    $('#id_model_algo').parent().prepend(html);   
+    $('.cust-data-id').parent().hide();
 
     <!-- Disable ID input on new model page -->
 
@@ -142,18 +150,151 @@
         $('.data-in-modal-row').unbind('click');
         $('.data-in-modal-row').click(function(e){
             var id = $(this).data('id');
+            var name = $(this).data('name');
             $('#id_model_data_id').val(id);
+            $('#dummy-dataset-name').val(name);
             $('.data-in-modal-row').removeClass('selected-modal-row');
             $(this).addClass('selected-modal-row');
-
-            if($('button[data-id="modal-dismiss"]').text() == 'Close'){
-                $('button[data-id="modal-dismiss"]').text('Confirm');
-            }
+            $('#datasetModal').modal('toggle');
         });
 
     });
 
     <!-- Get ID from MODAL -->
+
+    <!-- Send Get Request To Configure Page -->
+
+        $('#configure-model-btn').click(function(e){
+                var model_id = $(this).data('id');
+                var url = "configure?id="+model_id;
+                $.get(url, function( data ){
+                    
+                  $( ".result" ).html( data );
+                  $(".result").data("model-id", model_id);
+
+                    $('.result').find('li').unbind('hover');
+                    $('.result').find('li').hover(function(e){
+                        $('.result').find('li').find('span').addClass('configure-links-hide');
+                        $(this).find('span').removeClass('configure-links-hide');
+                    });
+
+                    $('.result').find('ul').find('li').find('a').unbind('click');
+                    $('.result').find('ul').find('li').find('a').click(function(e){
+
+                        var btnClicked = $(this).attr('id');
+
+                        var isInsig = $(this).parent().data('insig');
+                        var isClassifer = $(this).parent().data('classifier');
+
+                        if(btnClicked == 'configure-mark-red'){
+                            
+                            if(isClassifer == 1){
+                                isClassifer = 0;
+                                $(this).parent().data('classifier', 0);
+                                $(this).parent().parent().parent().parent().toggleClass('highlight-row-configure-green');      
+                            }
+                            if(isInsig == 1){
+                                isInsig = 0;
+                                $(this).parent().data('insig', 0);
+                            }
+                            else{
+                                $(this).parent().data('insig', 1);
+                                isInsig = 1;
+                            }
+                            
+                            $(this).parent().parent().parent().parent().toggleClass('highlight-row-configure-red');
+                        }
+                        if(btnClicked == 'configure-mark-green'){
+
+                            if(isInsig == 1){
+                                return;
+                            }
+
+                            if(isClassifer){
+                                isClassifer = 0;
+                                $(this).parent().data('classifier', 0);
+                            }
+                            else{
+                                
+                                $('.result').find('ul').find('li').find('span').each(function(e, obj){
+                                    if($(obj).data('classifier') == 1){
+                                        $(obj).data('classifier', 0);
+                                        $(obj).parent().parent().parent().toggleClass('highlight-row-configure-green');
+                                    }
+
+                                });
+
+                                $(this).parent().data('classifier', 1);
+                                isClassifer = 1;
+                            }
+                            
+                            $(this).parent().parent().parent().parent().toggleClass('highlight-row-configure-green');
+                        }
+                    });
+
+                    
+
+                });
+
+                $('#save-config-settings').unbind('click');
+                $('#save-config-settings').click(function(e){
+                    var insig_field = '';
+                    var class_field = '';
+                    var counter = 0;
+                    var id = $(".result").data("model-id");
+
+                    $('.result').find('ul').find('li').find('span').each(function(e, obj){
+
+                       // alert($(obj).data('colname'));
+                        if($(obj).data('classifier') == 1){
+                            class_field = $(obj).data('colname');
+                        }
+                        if($(obj).data('insig') == 1){
+                            if(counter != 0)
+                                insig_field = insig_field + ',' + $(obj).data('colname');
+                            else
+                                insig_field = $(obj).data('colname');
+                        }
+
+                        counter++;
+                    });
+
+                    //Save Configuration Settings
+                    var url = "configure/";
+                    
+                    var csrf_token = $('#csrf_for_config').val();
+
+                    $.ajaxSetup({
+                        beforeSend: function(xhr, settings) {
+                            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                                // Only send the token to relative URLs i.e. locally.
+                                xhr.setRequestHeader("X-CSRFToken",
+                                                     csrf_token);
+                            }
+                        }
+                    });
+                    
+                    var JsonText = '{"csrf_token":"'+csrf_token+'", "insig":"'+insig_field+'", "class":"'+class_field+'","model_id":"'+id+'"}';
+                    var obj = JSON.parse(JsonText);
+
+
+                    $.ajax({
+                      type: "POST",
+                      url: url,
+                      data: {"post_data":JSON.stringify(obj)},
+                      //data: csrf_token,
+                      success: function(data_returned){
+                         $('#configure-model-modal').modal('toggle');
+                        }
+                    });
+
+                });
+
+                
+        });
+
+    <!-- Send Get request to config page -->
+
 
 </script>
  <!-- custom_scripts -->

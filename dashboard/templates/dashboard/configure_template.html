@@ -1,0 +1,19 @@
+<ul class="list-group">
+	{% for col in col_list %}
+		<li class="list-group-item">
+			<div class="row">
+				<div class="col-md-6">
+					{{col}}
+				</div>
+				<div class="col-md-6">
+					<span class="configure-links-hide" data-colName = "{{col}}">
+						<a id="configure-mark-red" class="btn-link" href="#"><small>Toggle Insignificant</small></a>
+						|
+						<a id="configure-mark-green" class="btn-link" href="#"><small>Toggle Classifier</small></a>
+					</span>
+				</div>
+			</div>
+				
+		</li>
+	{% endfor %}
+</ul>

@@ -76,7 +76,7 @@
                                     </thead>
                                     <tbody>
                                         {% for data in data_list %}
-                                            <tr data-id = {{data.id}} class="data-in-modal-row">
+                                            <tr data-name = '{{data.dataset_name}}' data-id = {{data.id}} class="data-in-modal-row">
                                                 <td>{{data.dataset_name}}</td>
                                                 <td>{{data.dataset_author}}</td>
                                                 <td>{{data.dataset_up_date}}</td>
@@ -99,7 +99,7 @@
                         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default modal-confirm" data-dismiss="modal">Close</button>
       </div>
     </div>
 

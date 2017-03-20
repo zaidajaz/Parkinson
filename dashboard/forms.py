@@ -26,3 +26,5 @@ class NewModelForm(forms.ModelForm):
             'model_data_id': forms.NumberInput(attrs={'class':'form-control cust-data-id'}),
            # 'dataset_file': forms.FileInput(attrs={'class': 'form-control'}),
         }
+
+

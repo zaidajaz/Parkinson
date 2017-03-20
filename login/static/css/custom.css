@@ -69,5 +69,29 @@
 	cursor: pointer !important;
 }
 .selected-modal-row{
-	background-color: #DDD;
+	background-color: #7d7c7c !important;
+	color:#FFF;
+}
+.dash-icons{
+	width: 200px;
+}
+.cust-content{
+	text-align: center;
+}
+.configure-links-hide{
+	display: none;
+}
+.highlight-row-configure-red{
+	background-color: #d06d6d;
+	color: #fff;
+}
+.highlight-row-configure-red a{
+	color: #fff;
+}
+.highlight-row-configure-green{
+	background-color: #48a048;
+	color: #fff;
+}
+.highlight-row-configure-green a{
+	color: #fff;
 }

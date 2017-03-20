@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^datasets/new/$', views.newData, name='newData'),
     url(r'^models/$', views.model_list, name='model_list'),
     url(r'^models/new/$', views.newModel, name='newModel'),
+    url(r'^models/configure/$', views.modelConfig, name='modelConfig'),
+    url(r'^reports/$', views.report_list, name='report_list'),
 ]
