@@ -10,4 +10,7 @@ urlpatterns = [
     url(r'^models/new/$', views.newModel, name='newModel'),
     url(r'^models/configure/$', views.modelConfig, name='modelConfig'),
     url(r'^reports/$', views.report_list, name='report_list'),
+    url(r'^reports/new/$', views.newReport, name='newReport'),
+    url(r'^reports/view', views.viewReport, name='viewReport'),
+    url(r'^predict/$', views.predict, name='predict'),
 ]

@@ -52,6 +52,7 @@ class ReportInfo(models.Model):
 	report_author = models.CharField(max_length=200)
 	report_up_date = models.DateTimeField(default=datetime.now(), blank=True)
 	report_model_id = models.IntegerField()
+	report_accuracy = models.IntegerField()
 
 	def __str__(self):
-		return self.report_name		
+		return self.report_name

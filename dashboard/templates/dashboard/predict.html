@@ -1,0 +1,97 @@
+
+
+{% extends "dashboard/dash_header.html" %}
+{% block content %}
+
+<div class="wrapper">
+    {% include 'dashboard/sidebar.html' %}
+
+    <div class="main-panel">
+		<nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Prediction</a>
+                </div>
+                {% include 'dashboard/toplinks.html' %}
+            </div>
+        </nav>
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="well">
+                        		<form method="post" class="cust-data-form" action="">
+
+                        		{% csrf_token %}
+                  
+                        			<p><label for="id_dataset_name">MDVP:Fo(Hz):</label> <input type="text" value = "119.99200" name="a" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">MDVP:Fhi(Hz):</label> <input type="text" value = "157.30200" name="b" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">MDVP:Flo(Hz):</label> <input type="text" value = "74.99700" name="c" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">MDVP:Jitter(%):</label> <input value = "0.00784" type="text" name="d" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name"> MDVP:Jitter(Abs)
+:</label> <input value = "0.00007" type="text" name="e" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">MDVP:RAP:</label> <input value = "0.00370" type="text" name="f" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">MDVP:PPQ:</label> <input value = "0.00554" type="text" name="g" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">Jitter:DDP:</label> <input type="text" value = "0.01109" name="h" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">MDVP:Shimmer:</label> <input type="text" value = "0.04374" name="i" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">MDVP:Shimmer(dB):</label> <input value = "0.42600" type="text" name="j" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">Shimmer:APQ3:</label> <input type="text" value = "0.02182" name="k" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">Shimmer:APQ5:</label> <input value = "0.03130" type="text" name="l" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">MDVP:APQ:</label> <input value = "0.02971" type="text" name="m" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">Shimmer:DDA:</label> <input value = "0.06545" type="text" name="n" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">NHR:</label> <input value = "0.02211" type="text" name="o" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">HNR:</label> <input value = "21.03300" type="text" name="p" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+
+                        			<p><label for="id_dataset_name">RPDE:</label> <input value = "0.414783" type="text" name="q" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">DFA:</label> <input value = "0.815285" type="text" name="r" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">spread1:</label> <input value = "-4.813031" type="text" name="s" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">spread2:</label> <input value = "0.266482" type="text" name="t" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">D2:</label> <input value = "2.301442" type="text" name="u" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<p><label for="id_dataset_name">PPE:</label> <input value = "0.284654" type="text" name="v" maxlength="200" required="" class="form-control" id="id_dataset_name"></p>
+
+                        			<input class="btn btn-default" type="submit" value="Predict">
+
+                        		</form>
+                            </div>
+                    	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'dashboard/footer.html' %}
+
+
+    </div>
+</div>
+
+{% endblock %}

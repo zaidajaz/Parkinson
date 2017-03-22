@@ -52,20 +52,8 @@
                                                 <td>{{model.model_up_date}}</td>
                                                 <td>{{model.model_algo}}</td>
                                                 <td><a data-toggle='modal' id="configure-model-btn" data-target='#configure-model-modal' data-id={{model.id}} href="#">Configure</a></td>
-                                                <td class="dropdown">
-                                                    
-                                                      <a href="#" data-toggle="dropdown">
-                                                            
-                                                                Reports
-                                                                <b class="caret"></b>
-                                                            
-                                                      </a>
-                                                      <ul class="dropdown-menu">
-                                                        <li><a href="#">Create</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#">View</a></li>
-                                                      </ul>
-                                                
+                                                <td>
+                                                    <a data-id={{model.id}} data-toggle="modal" id="create-report-btn" data-target="#modal-create-report" href="#">Create Report</a>
                                                 </td>
                                             </tr>
 
@@ -99,9 +87,9 @@
     </div>
 </div>
 
-<!-- Modal Code -->
+<!-- Modal Codes -->
 
-<!-- Modal -->
+<!-- Modal (for configuration)-->
 <div id="configure-model-modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -125,7 +113,30 @@
   </div>
 </div>
 
-<!-- Modal Code Ends -->
+<!-- Modal For Create Report Progress -->
+
+<div id="modal-create-report" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Done</h4>
+      </div>
+      <div class="modal-body">
+        <p class="report-created-text"></p>
+      </div>
+      <div class="modal-footer">
+        <p>
+            Find all created reports <a href="{{root_url}}/dashboard/reports/">here</a>.
+        </p>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Modal Codes End -->
+
 
 
 

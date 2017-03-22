@@ -1,0 +1,71 @@
+<div class="content table-responsive table-full-width">
+
+    <table class="table table-hover table-striped">
+        
+        <tr>
+        	<th>Report ID</th>
+        	<td>{{ report_id }}</td>
+        </tr>
+        <tr>
+        	<th>Report Name</th>
+        	<td>{{ report_name }}</td>
+        </tr>
+        <tr>
+        	<th>Author</th>
+        	<td>{{ report_author }}</td>
+        </tr>
+        <tr>
+        	<th>Last Modified</th>
+        	<td>{{ report_date }}</td>
+        </tr>
+        <tr>
+        	<th>Algorithm Used</th>
+        	<td>{{ algo_used }}</td>
+        </tr>
+        <tr>
+        	<th>Dataset Used</th>
+        	<td>{{ dataset_name }}</td>
+        </tr>
+        <tbody>
+            
+
+        </tbody>
+    </table>
+
+</div>
+<div class="container-fluid">
+
+	<div class="row" style="margin-top:20px;">
+		<div class="col-md-4">
+			<div class="c100 p{{report_accuracy}} big">
+            	<span>Accuracy</span>
+            	<span style="margin-top:0.5em;text-align:center">{{report_accuracy}}%</span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        	</div>
+		</div>
+		<div class="col-md-4">
+			<div class="c100 p50 big orange">
+            <span>Error</span>
+            <span style="margin-top:0.5em;">NA</span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        	</div>
+		</div>
+		<div class="col-md-4">
+			<div class="c100 p70 big green">
+            <span>Kappa</span>
+            <span style="margin-top:0.5em;">NA</span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        	</div>
+		</div>
+	</div>
+
+</div>

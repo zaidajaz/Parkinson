@@ -95,3 +95,19 @@
 .highlight-row-configure-green a{
 	color: #fff;
 }
+.cust-modal-dialog {
+  width: 100%;
+  
+  margin: 0;
+  padding: 0;
+}
+
+.cust-modal-content {
+  height: auto;
+  min-height: 100%;
+  border-radius: 0;
+}
+.c100 span{
+	transform: scale(0.4);
+	padding-left: 0;
+}
