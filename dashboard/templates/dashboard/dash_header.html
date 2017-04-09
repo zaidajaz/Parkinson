@@ -169,11 +169,10 @@
 
     <!-- Send Get Request To Configure Page -->
 
-        $('#configure-model-btn').click(function(e){
+        $('#model-list-table').find('a#configure-model-btn').click(function(e){
                 var model_id = $(this).data('id');
                 var url = "configure?id="+model_id;
                 $.get(url, function( data ){
-                    
                   $( ".result" ).html( data );
                   $(".result").data("model-id", model_id);
 
@@ -339,6 +338,57 @@
 
 
     <!-- Prediction Script -->
+
+    <!-- Slide table to show content -->
+        $('#data-list-table').find('tr').unbind('click');
+        $('#data-list-table').find('tr').click(function(e){
+            id = $(this).data('id');
+            url = "{{root_url}}/dashboard/datasets/details/?id="+id;
+            $.get(url, function(result){
+
+                var scroll_loc = $('.main-panel').scrollTop();
+
+                $('.cust-details-layout').html(result);
+                $('.cust-details-layout').slideDown();
+                
+
+                $('.cust-details-layout').find('.header').find('.close').unbind('click');
+                $('.cust-details-layout').find('.header').find('.close').click(function(e){
+                    $('.cust-details-layout').slideUp();
+                    $('.main-panel').animate({scrollTop: scroll_loc}, 300);
+                });
+
+                $('.main-panel').animate({scrollTop: 0}, 300);
+            });
+
+        });
+
+        $('#model-list-table').find('tr').unbind('click');
+        $('#model-list-table').find('tr').click(function(e){
+            id = $(this).data('id');
+            url = "{{root_url}}/dashboard/models/details/?id="+id;
+            $.get(url, function(result){
+
+                var scroll_loc = $('.main-panel').scrollTop();
+
+                $('.cust-details-layout').html(result);
+                $('.cust-details-layout').slideDown();
+                
+
+                $('.cust-details-layout').find('.header').find('.close').unbind('click');
+                $('.cust-details-layout').find('.header').find('.close').click(function(e){
+                    $('.cust-details-layout').slideUp();
+                    $('.main-panel').animate({scrollTop: scroll_loc}, 300);
+                });
+
+                $('.main-panel').animate({scrollTop: 0}, 300);
+            });
+
+        });
+
+
+
+    <!-- slide table row to show content -->
 
 </script>
  <!-- custom_scripts -->

@@ -2,9 +2,25 @@ from django.db import models
 from datetime import datetime
 from django.contrib import auth
 from django import forms
-from .validators import validate_file_extension
+from .validators import validate_file_extension, validate_user_dp_extension
 from . import park_functions
 import os
+
+class UserInfo(models.Model):
+	user_id = models.IntegerField()
+	user_company = models.CharField(max_length=200)
+	user_address = models.TextField()
+	user_address_city = models.CharField(max_length=200)
+	user_address_country = models.CharField(max_length=200)
+	user_address_pin = models.IntegerField()
+	user_desc = models.CharField(max_length=160)
+	user_profile_pic = models.FileField(upload_to='dashboard/static/img/userprofiles/', validators=[validate_user_dp_extension])
+	user_fblink = models.URLField()
+	user_twitterlink = models.URLField()
+	user_gpluslink = models.URLField()
+	def __str__(self):
+		return str(self.user_id)
+
 
 class AlgoList(models.Model):
 	algo_name = models.CharField(max_length=200)

@@ -28,6 +28,9 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="card cust-details-layout">
+                            <!-- data will be displayed here -->
+                        </div>
                         <div class="card">
                             <div class="header">
                                 <h4 class="title">Associated Models</h4>
@@ -35,7 +38,7 @@
                             </div>
                             <div class="content table-responsive table-full-width">
 
-                                <table class="table table-hover table-striped">
+                                <table id="model-list-table" class="table table-hover table-striped">
                                     <thead>
                                         <th>Model Name</th>
                                     	<th>Author</th>
@@ -46,7 +49,7 @@
                                     <tbody>
                                         
                                         {% for model in model_list %}
-                                            <tr>
+                                            <tr data-id={{model.id}}>
                                                 <td>{{model.model_name}}</td>
                                                 <td>{{model.model_author}}</td>
                                                 <td>{{model.model_up_date}}</td>

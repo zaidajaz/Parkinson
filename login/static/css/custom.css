@@ -111,3 +111,9 @@
 	transform: scale(0.4);
 	padding-left: 0;
 }
+#data-list-table tr, #model-list-table tr{
+	cursor: pointer;
+}
+.cust-details-layout{
+	display: none;
+}

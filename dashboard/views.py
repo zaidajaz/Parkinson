@@ -6,7 +6,7 @@ from dashboard.forms import DataUploadForm, NewModelForm
 from django.template import RequestContext
 from django.http import HttpResponse
 from datetime import datetime
-from .models import DataInfo, ModelInfo, ModelConfig, ReportInfo
+from .models import DataInfo, ModelInfo, ModelConfig, ReportInfo, UserInfo
 import csv
 import os
 from django.middleware import csrf
@@ -32,7 +32,34 @@ def user_profile(request):
 	if request.user.id is None:
 		return HttpResponseRedirect('/')
 
-	return render_to_response('dashboard/user.html', {'name':request.user.first_name + ' ' + request.user.last_name, 'root_url':root_url })
+	user_company = ''
+	user_address = ''
+	user_city = ''
+	user_country = ''
+	user_postal = 0
+	user_desc = ''
+	user_dp = ''
+	user_fblink = ''
+	user_twitterlink = ''
+	user_gpluslink = ''
+	user_data = UserInfo.objects.all().filter(user_id=request.user.id)
+	for data in user_data:
+		user_company = data.user_company
+		user_address = data.user_address
+		user_city = data.user_address_city
+		user_country = data.user_address_country
+		user_postal = data.user_address_pin
+		user_desc = data.user_desc
+		user_dp = data.user_profile_pic.name
+		user_fblink = data.user_fblink
+		user_twitterlink = data.user_twitterlink
+		user_gpluslink = data.user_gpluslink 
+	
+	user_dp = user_dp.split('/')
+	dp_file_name = user_dp[-1]
+	user_args = {"root_url":root_url, "user_username":request.user.username, "user_firstname":request.user.first_name, "user_lastname":request.user.last_name, "name":request.user.first_name + ' ' + request.user.last_name, "user_email":request.user.email , "user_company":user_company, "user_address":user_address, "user_city":user_city, "user_country":user_country, "user_postal":user_postal, "user_desc":user_desc, "user_fblink":user_fblink, "user_twitterlink":user_twitterlink, "user_gpluslink":user_gpluslink, "user_dp":dp_file_name}
+
+	return render(request, 'dashboard/user.html', user_args)
 
 def data_list(request):
 
@@ -64,6 +91,33 @@ def newData(request):
 		args['userObj'] = request.user
 		return render(request, 'dashboard/newData.html', args)
 
+def dataDetails(request):
+	if request.user.id is None:
+		return HttpResponseRedirect('/')
+
+	if request.GET:
+		data_id = request.GET.get('id', -1)
+		if int(data_id) > -1:
+			data_list = DataInfo.objects.all().filter(id=data_id)
+			name = ''
+			author = ''
+			date = datetime.now()
+			desc = ''
+			url = ''
+
+			for data in data_list:
+				name = data.dataset_name
+				author = data.dataset_author
+				date = data.dataset_up_date
+				desc = data.dataset_desc
+				url = data.dataset_url
+			args = {'name':name,'author':author,'date':date,'desc':desc,'url':url}
+			return render(request,'dashboard/data_details_layout.html', args)
+		else:
+			return HttpResponse("Invalid Request")
+	else:
+		return HttpResponse("Invalid Request")
+
 def model_list(request):
 	if request.user.id is None:
 		return HttpResponseRedirect('/')
@@ -73,6 +127,33 @@ def model_list(request):
 	args['model_list'] = all_entries
 	args['csrf_for_config'] = csrf.get_token(request)
 	return render_to_response('dashboard/model_list.html', args)
+
+def modelDetails(request):
+	if request.user.id is None:
+		return HttpResponseRedirect('/')
+
+	if request.GET:
+		model_id = request.GET.get('id', -1)
+		if int(model_id) > -1:
+			model_list = ModelInfo.objects.all().filter(id=model_id)
+			name = ''
+			author = ''
+			date = datetime.now()
+			desc = ''
+			algo = ''
+
+			for model in model_list:
+				name = model.model_name
+				author = model.model_author
+				date = model.model_up_date
+				desc = model.model_desc
+				algo = model.model_algo
+			args = {'name':name,'author':author,'date':date,'desc':desc, 'algo_used': algo}
+			return render(request,'dashboard/model_details_layout.html', args)
+		else:
+			return HttpResponse("Invalid Request")
+	else:
+		return HttpResponse("Invalid Request")
 
 def report_list(request):
 	if request.user.id is None:
