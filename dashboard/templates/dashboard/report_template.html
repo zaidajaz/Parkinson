@@ -47,9 +47,9 @@
         	</div>
 		</div>
 		<div class="col-md-4">
-			<div class="c100 p50 big orange">
+			<div class="c100 p{{report_class_error}} big orange">
             <span>Error</span>
-            <span style="margin-top:0.5em;">NA</span>
+            <span style="margin-top:0.5em;">{{report_class_error}}%</span>
             <div class="slice">
                 <div class="bar"></div>
                 <div class="fill"></div>
@@ -57,14 +57,36 @@
         	</div>
 		</div>
 		<div class="col-md-4">
-			<div class="c100 p70 big green">
+
+            {{report_conf_matrix}}
+            <label>Confusion Matrix</label>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td><b>Predicted</b></td>
+                        <td><b>Predicted</b></td>
+                    </tr>
+                    <tr> 
+                        <td><b>Actual</b></td>   
+                        <td>{{cu1}}</td>
+                        <td>{{cu2}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Actual</b></td>
+                        <td>{{du1}}</td>
+                        <td>{{du2}}</td>
+                    </tr>
+                </tbody>    
+            </table>
+			<!-- <div class="c100 p70 big green">
             <span>Kappa</span>
             <span style="margin-top:0.5em;">NA</span>
             <div class="slice">
                 <div class="bar"></div>
                 <div class="fill"></div>
             </div>
-        	</div>
+        	</div> -->
 		</div>
 	</div>
 

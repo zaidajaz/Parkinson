@@ -11,7 +11,7 @@ import csv
 import os
 from django.middleware import csrf
 import json
-from . import knn
+from . import knn, svm, logistic_regression, naivebayes
 # Create your views here.
 
 root_url = 'http://localhost:8000'
@@ -174,10 +174,12 @@ def newReport(request):
  	if int(model_id) > -1:
  		model_set = ModelInfo.objects.all().filter(id=model_id)
  		model_name = ''
+ 		model_algo = ''
  		data_id = 0
  		for model in model_set:
  			model_name = model.model_name
  			data_id = model.model_data_id
+ 			model_algo = model.model_algo
  			break
 
  		data_set = DataInfo.objects.all().filter(id=data_id)
@@ -198,8 +200,16 @@ def newReport(request):
  		for config in config_list:
  			insig_field = config.model_insig_cols
  			class_field = config.model_classifier
+ 		metrics = {}
 
- 		accuracy = int(knn.calc_accuracy(fileFullName, insig_field, class_field) * 100)
+ 		if model_algo == 'nvb':
+ 			metrics = (naivebayes.calc_accuracy(fileFullName, insig_field, class_field))
+ 		if model_algo == 'knn':
+ 			metrics = (knn.calc_accuracy(fileFullName, insig_field, class_field))
+ 		if model_algo == 'svm':
+ 			metrics = (svm.calc_accuracy(fileFullName, insig_field, class_field))
+ 		if model_algo == 'logistic_regression':
+ 			metrics = (logistic_regression.calc_accuracy(fileFullName, insig_field, class_field))
 
  		report_list = ReportInfo.objects.all().filter(report_model_id=model_id)
  		reportExists = False
@@ -211,19 +221,23 @@ def newReport(request):
  			newReport.report_name = report_name
  			newReport.report_author = request.user.username
  			newReport.report_up_date = datetime.now()
- 			newReport.report_accuracy = accuracy
+ 			newReport.report_accuracy = metrics["classification_accuracy"]
  			newReport.report_model_id = model_id
+ 			newReport.report_class_error = metrics["classification_error"]
+ 			newReport.report_conf_matrix = metrics["confusion_matrix"]
  			newReport.save()
  		else:
  			newReport = ReportInfo()
  			newReport.report_name = report_name
  			newReport.report_author = request.user.username
  			newReport.report_up_date = datetime.now()
- 			newReport.report_accuracy = accuracy
+ 			newReport.report_accuracy = metrics["classification_accuracy"]
  			newReport.report_model_id = model_id
+ 			newReport.report_class_error = metrics["classification_error"]
+ 			newReport.report_conf_matrix = metrics["confusion_matrix"]
  			newReport.save()
 
- 		return HttpResponse(str(accuracy))
+ 		return HttpResponse(str(metrics))
 
 		#Save report data to databse
 
@@ -260,6 +274,9 @@ def viewReport(request):
 	dataset_id = 0
 	dataset_name = ''
 	report_accuracy = 0
+	report_class_error = 0
+	report_conf_matrix = ''
+
 
 	if int(report_id) > -1:
 		report_details = ReportInfo.objects.all().filter(id=report_id)
@@ -269,6 +286,8 @@ def viewReport(request):
 			report_date = report.report_up_date
 			model_id = report.report_model_id
 			report_accuracy = report.report_accuracy
+			report_class_error = report.report_class_error
+			report_conf_matrix = report.report_conf_matrix
 
 		model_details = ModelInfo.objects.all().filter(id=model_id)
 		for model in model_details:
@@ -279,7 +298,27 @@ def viewReport(request):
 		for data in data_details:
 			dataset_name = data.dataset_name
 
-		data_args = {"report_name":report_name,"report_author":report_author,"report_date":report_date,"algo_used":algo_used,"dataset_name":dataset_name,"report_id":report_id,"report_accuracy":report_accuracy}
+		report_conf_matrix = report_conf_matrix.replace('[','').replace(']','').replace('\n','')
+		report_conf_matrix = report_conf_matrix.split(' ')
+		
+		conf_up_1 = 0
+		conf_up_2 = 0
+		conf_down_1 = 0
+		conf_down_2 = 0
+		
+		i = 1
+		for conf_value in report_conf_matrix:
+			if i==1:
+				conf_up_1 = conf_value
+			if i==3:
+				conf_up_2 = conf_value
+			if i==4:
+				conf_down_1 = conf_value
+			if i==5:
+				conf_down_2 = conf_value
+			i = i+1
+
+		data_args = {"report_name":report_name,"report_author":report_author,"report_date":report_date,"algo_used":algo_used,"dataset_name":dataset_name,"report_id":report_id,"report_accuracy":report_accuracy, "report_class_error":report_class_error, "report_conf_matrix":report_conf_matrix, "cu1":conf_up_1, "cu2":conf_up_2, "du1": conf_down_1, "du2": conf_down_2}
 		return render(request, 'dashboard/report_template.html', data_args)
 	else:
 		return render(request, 'dashboard/css-circles.html')

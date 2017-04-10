@@ -69,6 +69,8 @@ class ReportInfo(models.Model):
 	report_up_date = models.DateTimeField(default=datetime.now(), blank=True)
 	report_model_id = models.IntegerField()
 	report_accuracy = models.IntegerField()
+	report_class_error = models.IntegerField(default=0)
+	report_conf_matrix = models.CharField(default=' ', max_length=1000)
 
 	def __str__(self):
 		return self.report_name

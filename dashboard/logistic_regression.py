@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn import preprocessing, neighbors, model_selection, metrics
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 import pandas as pd
 
@@ -19,7 +20,7 @@ def calc_accuracy(filefullname, insig_field, class_field):
 
 	X_train, X_test, y_train, y_test = model_selection.train_test_split(X,y,test_size=0.1)
 
-	clf = neighbors.KNeighborsClassifier()
+	clf = LogisticRegression()
 	clf.fit(X_train, y_train)
 	y_pred_class = clf.predict(X_test)
 	c_error = (1-(accuracy_score(y_test, y_pred_class)))*100
