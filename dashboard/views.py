@@ -299,24 +299,21 @@ def viewReport(request):
 			dataset_name = data.dataset_name
 
 		report_conf_matrix = report_conf_matrix.replace('[','').replace(']','').replace('\n','')
-		report_conf_matrix = report_conf_matrix.split(' ')
+		report_conf_matrix = report_conf_matrix.replace(' ',',')
+		report_conf_matrix = report_conf_matrix.split(',')
+			
+
+		element_list = []
+		for element in report_conf_matrix:
+			if element:
+				element_list.append(element)
+
+		report_conf_matrix = element_list
+		conf_up_1 = report_conf_matrix[0]
+		conf_up_2 = report_conf_matrix[1]
+		conf_down_1 = report_conf_matrix[2]
+		conf_down_2 = report_conf_matrix[3]
 		
-		conf_up_1 = 0
-		conf_up_2 = 0
-		conf_down_1 = 0
-		conf_down_2 = 0
-		
-		i = 1
-		for conf_value in report_conf_matrix:
-			if i==1:
-				conf_up_1 = conf_value
-			if i==3:
-				conf_up_2 = conf_value
-			if i==4:
-				conf_down_1 = conf_value
-			if i==5:
-				conf_down_2 = conf_value
-			i = i+1
 
 		data_args = {"report_name":report_name,"report_author":report_author,"report_date":report_date,"algo_used":algo_used,"dataset_name":dataset_name,"report_id":report_id,"report_accuracy":report_accuracy, "report_class_error":report_class_error, "report_conf_matrix":report_conf_matrix, "cu1":conf_up_1, "cu2":conf_up_2, "du1": conf_down_1, "du2": conf_down_2}
 		return render(request, 'dashboard/report_template.html', data_args)
